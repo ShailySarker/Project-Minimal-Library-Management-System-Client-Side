@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { FaBars, FaBook, FaXmark } from "react-icons/fa6";
 import { Link, NavLink } from "react-router";
-import Swal from "sweetalert2";
+import { useNotify } from "../hooks/useNotify";
 
 const Navbar = () => {
 
@@ -18,10 +18,6 @@ const Navbar = () => {
         setIsDropdownOpen(false);
         setMobileMenuOpen(false);
         setClick(!click);
-    };
-
-    const handleNotify = () => {
-        Swal.fire("Coming soon!");
     };
 
     return (
@@ -48,8 +44,8 @@ const Navbar = () => {
                 </ul>
             </div>
             <div className="lg:block hidden lg:w-[20%] lg:flex items-center xl:gap-3 lg:gap-2">
-                <button onClick={handleNotify} className="bg-[#AD3853] shadow-md shadow-neutral-200 text-[#F3EFEF] xl:text-[17.5px] lg:text-[15.5px] text-[16.5px] font-medium xl:w-28 lg:w-24 xl:py-2 py-[7px] rounded-[34px]">LogIn</button>
-                <button onClick={handleNotify} className="bg-[#AD3853] shadow-md shadow-neutral-200 text-[#F3EFEF] xl:text-[17.5px] lg:text-[15.5px] text-[16.5px] font-medium xl:w-28 lg:w-24 xl:py-2 py-[7px] rounded-[34px]">SignUp</button>
+                <button onClick={useNotify} className="bg-[#AD3853] shadow-md shadow-neutral-200 text-[#F3EFEF] xl:text-[17.5px] lg:text-[15.5px] text-[16.5px] font-medium xl:w-28 lg:w-24 xl:py-2 py-[7px] rounded-[34px]">LogIn</button>
+                <button onClick={useNotify} className="bg-[#AD3853] shadow-md shadow-neutral-200 text-[#F3EFEF] xl:text-[17.5px] lg:text-[15.5px] text-[16.5px] font-medium xl:w-28 lg:w-24 xl:py-2 py-[7px] rounded-[34px]">SignUp</button>
             </div>
             {/* medium and small device menu */}
             <div className="lg:hidden visible">
@@ -73,8 +69,8 @@ const Navbar = () => {
                     <ul className="md:mb-4 mb-3 md:text-[15.5px] text-[15px] font-semibold">
                         <NavLink to='/borrow-summary' className={({ isActive }) => isActive ? "border-b-2 border-white px-[2px]" : "px-[2px]"} onClick={closeDropdown}>Borrow Summary</NavLink>
                     </ul>
-                    <button onClick={handleNotify} className="md:mt-1 mt-[2px] md:mb-3 mb-[10px] md:text-[15.5px] text-[15px] bg-[#AD3853] shadow-md shadow-neutral-200 text-[#F3EFEF] font-medium w-full md:py-2 py-[6px] rounded-[34px]">LogIn</button>
-                    <button onClick={handleNotify} className="md:text-[15.5px] text-[15px] bg-[#AD3853] shadow-md shadow-neutral-200 text-[#F3EFEF] font-medium w-full md:py-2 py-[6px] rounded-[34px]">SignUp</button>
+                    <button onClick={useNotify} className="md:mt-1 mt-[2px] md:mb-3 mb-[10px] md:text-[15.5px] text-[15px] bg-[#AD3853] shadow-md shadow-neutral-200 text-[#F3EFEF] font-medium w-full md:py-2 py-[6px] rounded-[34px]">LogIn</button>
+                    <button onClick={useNotify} className="md:text-[15.5px] text-[15px] bg-[#AD3853] shadow-md shadow-neutral-200 text-[#F3EFEF] font-medium w-full md:py-2 py-[6px] rounded-[34px]">SignUp</button>
                 </div>
             )}
         </div>
