@@ -6,7 +6,7 @@ import { useNotify } from "../hooks/useNotify";
 const Footer = () => {
     return (
         <div>
-            <div className=" bg-[#A21D3C] text-white xl:py-12 md:py-8 py-6 lg:flex lg:flex-row lg:justify-between grid md:grid-cols-2 grid-cols-1 lg:gap-0 md:gap-x-24 md:gap-y-14 gap-6 xl:px-14 lg:px-12 md:px-7 px-5">
+            <div className=" bg-amber-700 text-white xl:py-12 md:py-8 py-6 lg:flex lg:flex-row lg:justify-between grid md:grid-cols-2 grid-cols-1 lg:gap-0 md:gap-x-24 md:gap-y-14 gap-6 xl:px-14 lg:px-12 md:px-7 px-5">
                 <div className="flex flex-col md:items-start items-center xl:w-[22%] lg:w-[25%]">
                     <Link to="/" className="text-white flex items-center xl:gap-3 gap-2">
                         <FaBook className="xl:text-4xl lg:text-3xl md:text-[29px] text-2xl" />
