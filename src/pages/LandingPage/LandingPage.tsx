@@ -1,6 +1,7 @@
 import Authors from "./Components/Authors";
 import Banner from "./Components/Banner";
 import Categories from "./Components/Categories";
+import Newsletter from "./Components/Newsletter";
 import WhyChooseUs from "./Components/WhyChooseUs";
 
 const LandingPage = () => {
@@ -9,7 +10,8 @@ const LandingPage = () => {
             <Banner />
             <Categories />
             {/* <Authors /> */}
-            <WhyChooseUs/>
+            <WhyChooseUs />
+            <Newsletter />
         </>
     );
 };
