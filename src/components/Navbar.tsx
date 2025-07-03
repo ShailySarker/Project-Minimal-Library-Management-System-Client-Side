@@ -57,7 +57,7 @@ const Navbar = () => {
             </div>
             {/* medium and small device menu */}
             {isMobileMenuOpen && (
-                <div style={{ zIndex: 9999 }} className="z-50 lg:hidden absolute md:top-[82px] top-[65px] right-4 px-4 md:py-6 py-4 md:w-52 w-44 rounded-t-xl rounded-br-xl rounded-bl-[50px] shadow-lg border-4 border-[#A21D3C] bg-[#A21D3C] text-white">
+                <div style={{ zIndex: 9999 }} className="z-50 lg:hidden absolute md:top-[82px] top-[65px] right-4 px-4 md:py-6 py-4 md:w-52 w-44 rounded-t-xl rounded-br-xl rounded-bl-[50px] shadow-lg border-4 border-amber-700 bg-amber-700 text-white">
                     <ul className="md:mb-4 mb-3 md:text-[15.5px] text-[15px] font-semibold">
                         <NavLink to='/' className={({ isActive }) => isActive ? "border-b-2 border-white px-[2px]" : "px-[2px]"} onClick={closeDropdown}>Home</NavLink>
                     </ul>
