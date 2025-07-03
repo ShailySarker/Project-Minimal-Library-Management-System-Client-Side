@@ -10,12 +10,13 @@ export const baseApi = createApi({
 
         // get books
         getBooks: builder.query({
-            query: ({
-                page = 1,
-                limit = 10,
-                sort = "desc",
-                sortBy = "createdAt",
-                filter = "" }) => `/books?page=${page}&limit=${limit}&sort=${sort}&sortBy=${sortBy}&filter=${filter}`,
+           query: () => "/books",
+            // query: ({
+            //     page = 1,
+            //     limit = 10,
+            //     sort = "desc",
+            //     sortBy = "createdAt",
+            //     filter = "" }) => `/books?page=${page}&limit=${limit}&sort=${sort}&sortBy=${sortBy}&filter=${filter}`,
         }),
 
         // create books
