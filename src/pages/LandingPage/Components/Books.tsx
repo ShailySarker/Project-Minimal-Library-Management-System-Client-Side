@@ -20,7 +20,9 @@ const Books = () => {
                     ) : isLoading ? (
                         <p className="xl:py-20 lg:py-16 md:py-14 py-12 xl:text-lg md:text-base text-sm font-semibold text-center">Loading...</p>
                     ) : (
-                        data?.data?.length > 0 && (
+                        data?.data?.length === 0 ? (
+                            <p className="xl:py-20 lg:py-16 md:py-14 py-12 xl:text-lg md:text-base text-sm font-semibold text-center">No book found!</p>
+                        ) : (
                             <div>
                                 <div className="w-full overflow-x-auto">
                                     <table className="table border-2 border-amber-700 md:min-w-full min-w-[500px]">
@@ -32,7 +34,7 @@ const Books = () => {
                                                 <th className='pl-2 font-semibold w-[15%] text-left'>Genre</th>
                                                 <th className='pl-2 font-semibold lg:w-[25%] w-[15%] text-left'>Actions</th>
                                             </tr>
-                                        </thead>
+                                        </thead >
                                         {
                                             data?.data
                                                 ?.filter((book: IBook) => book?.available === true)
@@ -54,17 +56,17 @@ const Books = () => {
                                                     </tbody>
                                                 )
                                         }
-                                    </table>
-                                </div>
+                                    </table >
+                                </div >
                                 <Link to="/books" className="flex justify-center xl:mt-12 lg:mt-10 md:mt-8 mt-6">
                                     <button className="xl:px-8 px-6 xl:py-[10px] md:py-2 py-[7px] bg-amber-700 text-white font-semibold rounded-xl hover:bg-amber-600 hover:rounded-4xl transition md:text-base text-sm flex items-center justify-center gap-2">Explore More <FaBook /></button>
                                 </Link>
-                            </div>
+                            </div >
                         )
                     )
                 }
-            </div>
-        </div>
+            </div >
+        </div >
     );
 };
 

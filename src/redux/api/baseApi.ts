@@ -10,13 +10,13 @@ export const baseApi = createApi({
 
         // get books
         getBooks: builder.query({
-           query: () => "/books",
-            // query: ({
-            //     page = 1,
-            //     limit = 10,
-            //     sort = "desc",
-            //     sortBy = "createdAt",
-            //     filter = "" }) => `/books?page=${page}&limit=${limit}&sort=${sort}&sortBy=${sortBy}&filter=${filter}`,
+            //    query: () => "/books",
+            query: ({
+                page = 1,
+                limit = 10,
+                sort = "desc",
+                sortBy = "createdAt",
+                filter = "" }) => `/books?page=${page}&limit=${limit}&sort=${sort}&sortBy=${sortBy}&filter=${filter}`,
         }),
 
         // create books
@@ -34,4 +34,4 @@ export const baseApi = createApi({
 })
 
 
-export const {useGetBooksQuery, useCreateBookMutation} = baseApi;
+export const { useGetBooksQuery, useCreateBookMutation } = baseApi;
