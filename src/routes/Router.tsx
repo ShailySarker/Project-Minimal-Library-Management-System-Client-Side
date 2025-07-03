@@ -2,6 +2,7 @@ import React, { Suspense } from "react";
 import { createBrowserRouter } from "react-router";
 import App from "../App";
 import LazyLoader from "../components/LazyLoader";
+import BookDetails from "../pages/BookDetails/BookDetails";
 
 const LandingPage = React.lazy(() => import("../pages/LandingPage/LandingPage"));
 const AllBooks = React.lazy(() => import("../pages/AllBooks/AllBooks"));
@@ -29,6 +30,12 @@ export const router = createBrowserRouter([
         path: "create-book",
         element: <Suspense fallback={<LazyLoader />}>
           <AddBook />
+        </Suspense>
+      },
+      {
+        path: "books/:id",
+        element: <Suspense fallback={<LazyLoader />}>
+          <BookDetails />
         </Suspense>
       },
     ]

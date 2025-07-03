@@ -5,7 +5,7 @@ export const baseApi = createApi({
     baseQuery: fetchBaseQuery({
         baseUrl: "http://localhost:4000/api"
     }),
-    tagTypes: ['book'],
+    tagTypes: ["book"],
     endpoints: (builder) => ({
 
         // get books
@@ -17,6 +17,7 @@ export const baseApi = createApi({
                 sort = "desc",
                 sortBy = "createdAt",
                 filter = "" }) => `/books?page=${page}&limit=${limit}&sort=${sort}&sortBy=${sortBy}&filter=${filter}`,
+            providesTags: ["book"]
         }),
 
         // create books
@@ -27,11 +28,34 @@ export const baseApi = createApi({
                 body: bookData
             }),
             invalidatesTags: ["book"]
-        })
+        }),
 
+        // get book by id
+        getBookById: builder.query({
+            query: (id) => `/books/${id}`,
+            providesTags: ['book'],
+        }),
 
+        // delete book
+        deleteBook: builder.mutation({
+            query: (bookId) => ({
+                url: `/books/${bookId}`,
+                method: "DELETE",
+            }),
+            invalidatesTags: ['book'],
+        }),
+
+        // update book
+        updateBook: builder.mutation({
+            query: ({ id, updatedData }) => ({
+                url: `/books/${id}`,
+                method: "PUT",
+                body: updatedData,
+            }),
+            invalidatesTags: ['book'],
+        }),
     })
 })
 
 
-export const { useGetBooksQuery, useCreateBookMutation } = baseApi;
+export const { useGetBooksQuery, useCreateBookMutation, useGetBookByIdQuery, useDeleteBookMutation, useUpdateBookMutation } = baseApi;

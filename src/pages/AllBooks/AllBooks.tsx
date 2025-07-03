@@ -1,8 +1,9 @@
 import { useState } from "react";
-import { useGetBooksQuery } from "../../redux/api/baseApi";
+import { useDeleteBookMutation, useGetBooksQuery } from "../../redux/api/baseApi";
 import { FaAngleLeft, FaAngleRight, FaAnglesLeft, FaBook } from "react-icons/fa6";
 import type { IBook } from "../types";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
+import Swal from "sweetalert2";
 
 const genres = ["", "FICTION", "NON_FICTION", "SCIENCE", "HISTORY", "BIOGRAPHY", "FANTASY"];
 const sortFields = ["createdAt", "title", "author"];
@@ -13,12 +14,41 @@ const AllBooks = () => {
     const [sortBy, setSortBy] = useState("createdAt");
     const [sort, setSort] = useState<'asc' | 'desc'>("desc");
 
-    const { data, isLoading, isError } = useGetBooksQuery({ page, limit: 10, sort, sortBy, filter });
+    const { data, isLoading, isError } = useGetBooksQuery({
+        page, limit: 10, sort, sortBy, filter,
+        pollingInterval: 30000, 
+        refetchOnFocus: true,
+        refetchOnMountOrArgChange: true,
+        refetchOnReconnect: true
+    });
     const totalPages = data?.meta?.totalPages || 1;
 
+    const [deleteBook] = useDeleteBookMutation();
+    const navigate = useNavigate();
+    const handleDelete = async (id: string) => {
+        console.log(id);
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!"
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                await deleteBook(id);
+                Swal.fire({
+                    title: "Deleted!",
+                    text: "Your file has been deleted.",
+                    icon: "success"
+                });
+            }
+        });
+    };
 
     return (
-        <div className="xl:px-20 lg:px-16 md:px-12 px-6 xl:mt-6 lg:mt-5 md:mt-4 mt-10 xl:mb-24 lg:mb-20 md:mb-16 mb-14">
+        <div className="xl:px-20 lg:px-16 md:px-12 px-6 xl:mt-6 lg:mt-5 md:mt-4 mt-3 xl:mb-24 lg:mb-20 md:mb-16 mb-14">
             <div>
                 <h1 className="xl:text-4xl/normal md:text-3xl/normal text-2xl/normal font-bold text-center text-black">Lets Drive - World of Books</h1>
                 <p className="text-center lg:w-[60%] md:w-[75%] w-[90%] mx-auto xl:text-xl md:text-lg text-sm lg:mt-2 md:mt-[6px] mt-2 text-black">Explore endless stories, timeless knowledge, and the authors behind them.</p>
@@ -104,13 +134,13 @@ const AllBooks = () => {
                                                 </div>
 
                                                 <div className="grid grid-cols-3 gap-2 font-bold xl:mt-5 mt-3">
-                                                    <button className="transition duration-300 py-1 rounded-lg bg-green-600 hover:bg-green-700 text-white text-sm xl:text-base">
+                                                    <button onClick={() => navigate(`/books/${book?._id}`)} className="transition duration-300 py-1 rounded-lg bg-green-600 hover:bg-green-700 text-white text-sm xl:text-base">
                                                         View
                                                     </button>
-                                                    <button className="transition duration-300 py-1 rounded-lg bg-amber-500 hover:bg-amber-600 text-white text-sm xl:text-base">
+                                                    <button onClick={() => navigate(`/edit-book/${book?._id}`)} className="transition duration-300 py-1 rounded-lg bg-amber-500 hover:bg-amber-600 text-white text-sm xl:text-base">
                                                         Edit
                                                     </button>
-                                                    <button className="transition duration-300 py-1 rounded-lg bg-red-500 hover:bg-red-600 text-white text-sm xl:text-base">
+                                                    <button onClick={() => handleDelete(book?._id)} className="transition duration-300 py-1 rounded-lg bg-red-500 hover:bg-red-600 text-white text-sm xl:text-base">
                                                         Delete
                                                     </button>
                                                 </div>
