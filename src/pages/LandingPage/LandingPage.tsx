@@ -11,8 +11,8 @@ const LandingPage = () => {
         <>
             <Banner />
             <Categories />
-            {/* <Authors /> */}
             <Books/>
+            <Authors />
             <WhyChooseUs />
             <Newsletter />
             <FAQs/>

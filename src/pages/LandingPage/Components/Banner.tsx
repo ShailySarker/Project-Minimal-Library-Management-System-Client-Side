@@ -11,7 +11,7 @@ const Banner = () => {
                     Discover, borrow, and manage your favorite books all in one place.
                 </p>
                 <Link to="/books">
-                    <button className="xl:px-8 px-6 xl:py-[10px] md:py-2 py-[7px] bg-white text-black font-semibold rounded-xl hover:bg-gray-200 transition md:text-base text-sm">
+                    <button className="xl:px-8 px-6 xl:py-[10px] md:py-2 py-[7px] bg-white text-black font-semibold rounded-xl hover:bg-gray-200 hover:rounded-4xl transition md:text-base text-sm">
                         Explore Library
                     </button>
                 </Link>

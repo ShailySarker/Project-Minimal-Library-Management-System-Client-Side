@@ -46,9 +46,9 @@ const Books = () => {
                                                             <th className='pl-2 lg:w-[20%] w-[25%] xl:text-base md:text-sm text-[13px] font-medium text-left'>{book?.author}</th>
                                                             <th className='pl-2 w-[15%] xl:text-base md:text-sm text-[13px] font-medium text-left'>{book?.genre}</th>
                                                             <th className='px-2 lg:w-[25%] w-[15%] xl:text-base md:text-sm text-[13px] font-medium flex lg:flex-row flex-col items-center gap-2'>
-                                                                <button className="px-3 py-1 rounded-lg w-full bg-green-500 xl:text-base text-sm text-white">View</button>
-                                                                <button className="px-3 py-1 rounded-lg w-full bg-amber-500 xl:text-base text-sm text-white">Edit</button>
-                                                                <button className="px-3 py-1 rounded-lg w-full bg-red-500 xl:text-base text-sm text-white">Delete</button>
+                                                                <button className="transition-transform duration-500 transform hover:scale-105 px-3 py-1 rounded-lg w-full bg-green-500 xl:text-base text-sm text-white">View</button>
+                                                                <button className="transition-transform duration-500 transform hover:scale-105 px-3 py-1 rounded-lg w-full bg-amber-500 xl:text-base text-sm text-white">Edit</button>
+                                                                <button className="transition-transform duration-500 transform hover:scale-105 px-3 py-1 rounded-lg w-full bg-red-500 xl:text-base text-sm text-white">Delete</button>
                                                             </th>
                                                         </tr>
                                                     </tbody>
@@ -57,7 +57,7 @@ const Books = () => {
                                     </table>
                                 </div>
                                 <Link to="/books" className="flex justify-center xl:mt-12 lg:mt-10 md:mt-8 mt-6">
-                                    <button className="xl:px-8 px-6 xl:py-[10px] md:py-2 py-[7px] bg-amber-700 text-white font-semibold rounded-xl hover:bg-gray-200 transition md:text-base text-sm flex items-center justify-center gap-2">Explore More <FaBook /></button>
+                                    <button className="xl:px-8 px-6 xl:py-[10px] md:py-2 py-[7px] bg-amber-700 text-white font-semibold rounded-xl hover:bg-amber-600 hover:rounded-4xl transition md:text-base text-sm flex items-center justify-center gap-2">Explore More <FaBook /></button>
                                 </Link>
                             </div>
                         )
