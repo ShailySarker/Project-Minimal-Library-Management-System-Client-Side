@@ -122,9 +122,9 @@ const AllBooks = () => {
                                         <thead className="min-w-full">
                                             <tr className="xl:text-lg md:text-base text-[15px] py-3 bg-amber-700 text-white flex items-center justify-between min-w-full">
                                                 <th className='pl-2 font-semibold w-[5%] text-left'>ID</th>
-                                                <th className='pl-2 font-semibold w-[20%] text-left'>Title</th>
+                                                <th className='pl-2 font-semibold w-[19%] text-left'>Title</th>
                                                 <th className='pl-2 font-semibold w-[15%] text-left'>Author</th>
-                                                <th className='pl-2 font-semibold xl:w-[10%] w-[12%] text-left'>Genre</th>
+                                                <th className='pl-2 font-semibold xl:w-[11%] w-[12%] text-left'>Genre</th>
                                                 <th className='pl-2 font-semibold w-[15%] text-left'>ISBN</th>
                                                 <th className='pl-2 font-semibold w-[7%] text-left'>Copies</th>
                                                 <th className='pl-2 font-semibold xl:w-[13%] w-[11%] text-left'>Availability</th>
@@ -137,9 +137,9 @@ const AllBooks = () => {
                                                     <tr className={`py-2 border-t-2 border-amber-700 flex items-center justify-between min-w-full ${index % 2 === 0 ? 'bg-amber-100' : ''
                                                         }`}>
                                                         <th className='pl-2 w-[5%] xl:text-base lg:text-[13px] md:text-[13.5px] text-[13px] font-bold text-left'>{index + 1}</th>
-                                                        <th className='pl-2 w-[20%] xl:text-base lg:text-[13px] md:text-[13.5px] text-[13px] font-medium text-left'>{book?.title}</th>
+                                                        <th className='pl-2 w-[19%] xl:text-base lg:text-[13px] md:text-[13.5px] text-[13px] font-medium text-left'>{book?.title}</th>
                                                         <th className='pl-2 w-[15%] xl:text-base lg:text-[13px] md:text-[13.5px] text-[13px] font-medium text-left'>{book?.author}</th>
-                                                        <th className='pl-2 xl:w-[10%] w-[12%] xl:text-base lg:text-[13px] md:text-[13.5px] text-[13px] font-medium text-left'>{book?.genre}</th>
+                                                        <th className='pl-2 xl:w-[11%] w-[12%] xl:text-base lg:text-[13px] md:text-[13.5px] text-[13px] font-medium text-left'>{book?.genre}</th>
                                                         <th className='pl-2 w-[15%] xl:text-base lg:text-[13px] md:text-[13.5px] text-[13px] font-medium text-left'>{book?.isbn}</th>
                                                         <th className='pl-2 w-[7%] xl:text-base lg:text-[13px] md:text-[13.5px] text-[13px] font-medium text-left'>{book?.copies}</th>
                                                         <th className='pl-2 xl:w-[13%] w-[11%] xl:text-base lg:text-[13px] md:text-[13.5px] text-[13px] font-medium text-left'>
