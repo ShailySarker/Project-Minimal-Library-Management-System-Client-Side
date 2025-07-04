@@ -4,7 +4,7 @@ import { useNavigate } from "react-router";
 import Swal from "sweetalert2";
 import { FaX } from "react-icons/fa6";
 
-const BorrowModal = ({ bookId, availableCopies, onClose }) => {
+const BorrowModal = ({ bookId, availableCopies, onClose }: any) => {
     const [quantity, setQuantity] = useState<string | number>("1");
     const [dueDate, setDueDate] = useState("");
     const [borrowBook, { isLoading }] = useBorrowBookMutation();

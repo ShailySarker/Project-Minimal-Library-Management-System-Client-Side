@@ -8,7 +8,7 @@ const Navbar = () => {
     const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
     const [click, setClick] = useState(false);
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-
+    console.log(isDropdownOpen);
     const toggleMobileMenu = () => {
         setMobileMenuOpen(!isMobileMenuOpen);
         setIsDropdownOpen(true);
@@ -22,7 +22,7 @@ const Navbar = () => {
 
     return (
         <div className="sticky top-0 z-50 bg-amber-700 flex items-center justify-between lg:px-10 md:px-7 px-5 xl:py-6 lg:py-4 md:py-[18px] py-3">
-        {/* // <div className="sticky top-0 z-50 bg-[#A21D3C] flex items-center justify-between lg:px-10 md:px-7 px-5 xl:py-6 lg:py-4 md:py-[18px] py-3"> */}
+            {/* // <div className="sticky top-0 z-50 bg-[#A21D3C] flex items-center justify-between lg:px-10 md:px-7 px-5 xl:py-6 lg:py-4 md:py-[18px] py-3"> */}
             <div className="lg:w-[20%]">
                 <Link to="/" className="text-white flex items-center xl:gap-3 gap-2">
                     <FaBook className="xl:text-4xl lg:text-3xl md:text-[29px] text-2xl" />
