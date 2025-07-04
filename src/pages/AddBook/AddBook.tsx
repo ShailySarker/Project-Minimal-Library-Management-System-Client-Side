@@ -11,7 +11,7 @@ const AddBook = () => {
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        const form = e.currentTarget;
+        const form = e?.currentTarget;
         const formData = new FormData(form);
 
         const title = formData.get("title")?.toString().trim();
@@ -29,7 +29,6 @@ const AddBook = () => {
             return alert("Please fill out all fields correctly. Copies must be 0 or greater.");
         }
 
-
         const bookData = {
             title,
             author,
@@ -40,14 +39,13 @@ const AddBook = () => {
             available: copies > 0,
         };
 
-
         try {
             await createBook(bookData).unwrap();
             Swal.fire({
                 icon: "success",
                 title: "Book added successfully!",
                 showConfirmButton: false,
-                timer: 1500
+                timer:2000
             });
             form.reset();
             navigate("/books");
@@ -79,14 +77,12 @@ const AddBook = () => {
                         required
                         className="py-2 xl:px-4 px-3 rounded-xl border-2 border-amber-700 bg-white font-medium placeholder:text-gray-500"
                     />
-
                     <input
                         name="author"
                         placeholder="Author"
                         required
                         className="py-2 xl:px-4 px-3 rounded-xl border-2 border-amber-700 bg-white font-medium placeholder:text-gray-500"
                     />
-
                     <select
                         name="genre"
                         required
@@ -97,21 +93,18 @@ const AddBook = () => {
                             <option key={genre} value={genre}>{genre}</option>
                         ))}
                     </select>
-
                     <input
                         name="isbn"
                         placeholder="ISBN"
                         required
                         className="py-2 xl:px-4 px-3 rounded-xl border-2 border-amber-700 bg-white font-medium placeholder:text-gray-500"
                     />
-
                     <textarea
                         name="description"
                         placeholder="Description"
                         required
                         className="py-2 xl:px-4 px-3 rounded-xl border-2 border-amber-700 bg-white font-medium placeholder:text-gray-500"
                     />
-
                     <input
                         name="copies"
                         type="number"
@@ -120,7 +113,6 @@ const AddBook = () => {
                         required
                         className="py-2 xl:px-4 px-3 rounded-xl border-2 border-amber-700 bg-white font-medium placeholder:text-gray-500"
                     />
-
                     <button
                         type="submit"
                         disabled={isLoading}

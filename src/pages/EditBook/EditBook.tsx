@@ -64,7 +64,7 @@ const EditBook = () => {
                 icon: "success",
                 title: "Book updated successfully!",
                 showConfirmButton: false,
-                timer: 1500,
+                timer:2000,
             });
             navigate("/books");
             

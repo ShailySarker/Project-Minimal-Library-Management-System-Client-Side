@@ -2,7 +2,12 @@ import { useGetBorrowSummaryQuery } from "../../redux/api/baseApi";
 import type { IBorrowSummary } from "../../types";
 
 const BorrowSummary = () => {
-    const { data, isLoading, isError } = useGetBorrowSummaryQuery(undefined);
+    const { data, isLoading, isError } = useGetBorrowSummaryQuery(undefined, {
+        pollingInterval: 30000,
+        refetchOnFocus: true,
+        refetchOnMountOrArgChange: true,
+        refetchOnReconnect: true
+    });
 
     return (
         <div className="xl:px-20 lg:px-16 md:px-12 px-6 xl:mt-6 lg:mt-5 md:mt-4 mt-3 xl:mb-24 lg:mb-20 md:mb-16 mb-14">
