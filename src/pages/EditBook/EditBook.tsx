@@ -66,8 +66,8 @@ const EditBook = () => {
                 showConfirmButton: false,
                 timer: 1500,
             });
-
             navigate("/books");
+            
         } catch (error: any) {
             Swal.fire("Error", error?.data?.message || "Update failed", "error");
         }
