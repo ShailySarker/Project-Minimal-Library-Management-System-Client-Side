@@ -55,7 +55,8 @@ const EditBook = () => {
                 id,
                 updatedData: {
                     ...formState,
-                    available: formState.copies > 0,
+                    copies: Number(formState?.copies),
+                    available: Number(formState?.copies) > 0,
                 },
             }).unwrap();
 

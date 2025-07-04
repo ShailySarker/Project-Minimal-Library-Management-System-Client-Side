@@ -1,19 +1,22 @@
 import { useState } from "react";
 import { useDeleteBookMutation, useGetBooksQuery } from "../../redux/api/baseApi";
-import { FaAngleLeft, FaAngleRight, FaAnglesLeft, FaBook } from "react-icons/fa6";
+import { FaAngleLeft, FaAngleRight, FaBook } from "react-icons/fa6";
 import type { IBook } from "../types";
 import { Link, useNavigate } from "react-router";
 import Swal from "sweetalert2";
+import BorrowModal from "../../components/BorrowModal";
 
-const genres = ["", "FICTION", "NON_FICTION", "SCIENCE", "HISTORY", "BIOGRAPHY", "FANTASY"];
-const sortFields = ["createdAt", "title", "author"];
 
 const AllBooks = () => {
+    const genres = ["", "FICTION", "NON_FICTION", "SCIENCE", "HISTORY", "BIOGRAPHY", "FANTASY"];
+    const sortFields = ["createdAt", "title", "author"];
+
     const [page, setPage] = useState(1);
     const [filter, setFilter] = useState("");
     const [sortBy, setSortBy] = useState("createdAt");
     const [sort, setSort] = useState<'asc' | 'desc'>("desc");
     const [borrowingModal, setBorrowingModal] = useState(false);
+    const [borrowingBookInfo, setBorrowingBookInfo] = useState<null | { bookId: string; availableCopies: number }>(null);
 
     const { data, isLoading, isError } = useGetBooksQuery(
         { page, limit: 10, sort, sortBy, filter },
@@ -149,12 +152,14 @@ const AllBooks = () => {
                                                         </th>
                                                         <th className='px-2 w-[15%] xl:text-base lg:text-[13px] md:text-[13.5px] text-[13px] font-medium grid grid-cols-2 items-center xl:gap-2 gap-1'>
                                                             <button onClick={() => navigate(`/books/${book?._id}`)} className="transition-transform duration-500 transform hover:scale-105 xl:px-3 px-2 py-1 rounded-lg w-full bg-green-500 xl:text-base lg:text-[13px] md:text-[13.5px] text-[13px] text-white">View</button>
-                                                            <button
-                                                                className={`transition-transform duration-500 transform hover:scale-105 xl:px-3 px-2 py-1 rounded-lg w-full xl:text-base lg:text-[13px] md:text-[13.5px] text-[13px] text-white ${book?.available ? "bg-blue-600 hover:bg-blue-700" : "bg-gray-400 cursor-not-allowed"
-                                                                    }`}
+                                                            <button className={`transition-transform duration-500 transform hover:scale-105 xl:px-3 px-2 py-1 rounded-lg w-full xl:text-base lg:text-[13px] md:text-[13.5px] text-[13px] text-white ${book?.available ? "bg-blue-600 hover:bg-blue-700" : "bg-gray-400 cursor-not-allowed"}`}
                                                                 disabled={!book?.available}
-                                                                onClick={() => book?.available && setBorrowingModal(true)}
-                                                            >
+                                                                onClick={() => {
+                                                                    if (book?.available) {
+                                                                        setBorrowingModal(true);
+                                                                        setBorrowingBookInfo({ bookId: book?._id, availableCopies: book?.copies })
+                                                                    }
+                                                                }}>
                                                                 Borrow
                                                             </button>
                                                             <button onClick={() => navigate(`/edit-book/${book?._id}`)} className="transition-transform duration-500 transform hover:scale-105 xl:px-3 px-2 py-1 rounded-lg w-full bg-amber-500 xl:text-base lg:text-[13px] md:text-[13.5px] text-[13px] text-white">Edit</button>
@@ -192,8 +197,20 @@ const AllBooks = () => {
                 }
 
             </div>
-        </div>
+
+            {/* borrow book model */}
+            {
+                borrowingModal && (
+                    <BorrowModal
+                        bookId={borrowingBookInfo?.bookId}
+                        availableCopies={borrowingBookInfo?.availableCopies}
+                        onClose={() => setBorrowingModal(false)}
+                    />
+                )
+            }
+        </div >
     );
 };
 
 export default AllBooks;
+

@@ -1,6 +1,8 @@
 import { useNavigate, useParams } from "react-router";
 import { useDeleteBookMutation, useGetBookByIdQuery } from "../../redux/api/baseApi";
 import Swal from "sweetalert2";
+import { useState } from "react";
+import BorrowModal from "../../components/BorrowModal";
 
 const BookDetails = () => {
     const { id } = useParams();
@@ -31,7 +33,9 @@ const BookDetails = () => {
         });
     };
 
-    // 
+    const [borrowingModal, setBorrowingModal] = useState(false);
+    const [borrowingBookInfo, setBorrowingBookInfo] = useState<null | { bookId: string; availableCopies: number }>(null);
+
 
     return (
         <div className="xl:px-20 lg:px-16 md:px-12 px-6 xl:mt-6 lg:mt-5 md:mt-4 mt-3 xl:mb-24 lg:mb-20 md:mb-16 mb-14">
@@ -54,7 +58,14 @@ const BookDetails = () => {
                             <p className="xl:text-lg md:text-base text-sm font-medium"><strong>Copies:</strong> {book?.data?.copies}</p>
                             <p className="xl:text-lg md:text-base text-sm font-medium"><strong>Available:</strong> {book?.data?.available ? 'Yes' : 'No'}</p>
                             <div className="flex lg:gap-3 gap-2 justify-center xl:mt-14 lg:mt-10 md:mt-8 mt-7 font-semibold">
-                                <button onClick={() => navigate(`/books/${book?.data?._id}`)} className={`transition duration-300 xl:px-8 px-6 xl:py-[10px] md:py-2 py-[7px] rounded-xl hover:rounded-4x text-white text-sm xl:text-base ${book?.data?.available ? "bg-blue-600 hover:bg-blue-700" : "bg-gray-400 cursor-not-allowed"}`}>
+                                <button className={`transition duration-300 xl:px-8 px-6 xl:py-[10px] md:py-2 py-[7px] rounded-xl hover:rounded-4x text-white text-sm xl:text-base ${book?.data?.available ? "bg-blue-600 hover:bg-blue-700" : "bg-gray-400 cursor-not-allowed"}`}
+                                    disabled={!book?.data?.available}
+                                    onClick={() => {
+                                        if (book?.data?.available) {
+                                            setBorrowingModal(true);
+                                            setBorrowingBookInfo({ bookId: book?.data?._id, availableCopies: book?.data?.copies })
+                                        }
+                                    }}>
                                     Borrow
                                 </button>
                                 <button onClick={() => navigate(`/edit-book/${book?.data?._id}`)} className="transition duration-300 xl:px-8 px-6 xl:py-[10px] md:py-2 py-[7px] rounded-xl hover:rounded-4xl bg-amber-500 hover:bg-amber-600 text-white text-sm xl:text-base ">
@@ -68,6 +79,16 @@ const BookDetails = () => {
                     )
                 }
             </div>
+            {/* borrow book model */}
+            {
+                borrowingModal && (
+                    <BorrowModal
+                        bookId={borrowingBookInfo?.bookId}
+                        availableCopies={borrowingBookInfo?.availableCopies}
+                        onClose={() => setBorrowingModal(false)}
+                    />
+                )
+            }
         </div>
     );
 };
