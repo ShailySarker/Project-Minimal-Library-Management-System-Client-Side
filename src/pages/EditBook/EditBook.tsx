@@ -75,7 +75,7 @@ const EditBook = () => {
 
     return (
         <div className="xl:px-20 lg:px-16 md:px-12 px-6 xl:mt-6 lg:mt-5 md:mt-4 mt-3 xl:mb-24 lg:mb-20 md:mb-16 mb-14">
-            <h1 className="text-2xl md:text-3xl xl:text-4xl font-bold text-center">Update Book</h1>
+            <h1 className="xl:text-4xl/normal md:text-3xl/normal text-2xl/normal font-bold text-center text-amber-700">Update Book</h1>
             {
                 isError ? (
                     <p className="xl:py-20 lg:py-16 md:py-14 py-12 xl:text-lg md:text-base text-sm font-semibold text-center">Something went wrong.</p>

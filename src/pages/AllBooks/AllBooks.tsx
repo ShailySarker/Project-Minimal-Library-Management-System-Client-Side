@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useDeleteBookMutation, useGetBooksQuery } from "../../redux/api/baseApi";
 import { FaAngleLeft, FaAngleRight, FaBook } from "react-icons/fa6";
-import type { IBook } from "../types";
+import type { IBook } from "../../types";
 import { Link, useNavigate } from "react-router";
 import Swal from "sweetalert2";
 import BorrowModal from "../../components/BorrowModal";
@@ -121,7 +121,7 @@ const AllBooks = () => {
                                     <table className="table border-2 border-amber-700 lg:min-w-full md:min-w-[980px] min-w-[890px]">
                                         <thead className="min-w-full">
                                             <tr className="xl:text-lg md:text-base text-[15px] py-3 bg-amber-700 text-white flex items-center justify-between min-w-full">
-                                                <th className='pl-2 font-semibold w-[5%] text-left'>ID</th>
+                                                <th className='pl-2 font-semibold w-[5%] text-left'>#</th>
                                                 <th className='pl-2 font-semibold w-[19%] text-left'>Title</th>
                                                 <th className='pl-2 font-semibold w-[15%] text-left'>Author</th>
                                                 <th className='pl-2 font-semibold xl:w-[11%] w-[12%] text-left'>Genre</th>
@@ -147,7 +147,7 @@ const AllBooks = () => {
                                                                 className={`font-bold ${book?.available ? "text-green-600" : "text-yellow-500"
                                                                     }`}
                                                             >
-                                                                {book?.available ? "Available" : "Not Available"}
+                                                                {book?.available ? "Available" : "Unavailable"}
                                                             </span>
                                                         </th>
                                                         <th className='px-2 w-[15%] xl:text-base lg:text-[13px] md:text-[13.5px] text-[13px] font-medium grid grid-cols-2 items-center xl:gap-2 gap-1'>
