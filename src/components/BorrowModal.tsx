@@ -4,7 +4,6 @@ import { useNavigate } from "react-router";
 import Swal from "sweetalert2";
 import { FaX } from "react-icons/fa6";
 
-
 const BorrowModal = ({ bookId, availableCopies, onClose }) => {
     const [quantity, setQuantity] = useState<string | number>("1");
     const [dueDate, setDueDate] = useState("");
