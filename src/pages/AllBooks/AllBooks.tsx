@@ -13,20 +13,24 @@ const AllBooks = () => {
     const [filter, setFilter] = useState("");
     const [sortBy, setSortBy] = useState("createdAt");
     const [sort, setSort] = useState<'asc' | 'desc'>("desc");
+    const [borrowingModal, setBorrowingModal] = useState(false);
 
-    const { data, isLoading, isError } = useGetBooksQuery({
-        page, limit: 10, sort, sortBy, filter,
-        pollingInterval: 30000, 
-        refetchOnFocus: true,
-        refetchOnMountOrArgChange: true,
-        refetchOnReconnect: true
-    });
+    const { data, isLoading, isError } = useGetBooksQuery(
+        { page, limit: 10, sort, sortBy, filter },
+        {
+            pollingInterval: 30000,
+            refetchOnFocus: true,
+            refetchOnMountOrArgChange: true,
+            refetchOnReconnect: true
+        }
+    );
     const totalPages = data?.meta?.totalPages || 1;
 
     const [deleteBook] = useDeleteBookMutation();
     const navigate = useNavigate();
+
+    // delete work
     const handleDelete = async (id: string) => {
-        console.log(id);
         Swal.fire({
             title: "Are you sure?",
             text: "You won't be able to revert this!",
@@ -40,7 +44,7 @@ const AllBooks = () => {
                 await deleteBook(id);
                 Swal.fire({
                     title: "Deleted!",
-                    text: "Your file has been deleted.",
+                    text: "Book deleted successfully!",
                     icon: "success"
                 });
             }
@@ -69,7 +73,7 @@ const AllBooks = () => {
                                     {/* Filters */}
                                     <div className="flex flex-wrap xl:gap-4 gap-2">
                                         <select
-                                            className="xl:w-44 w-[31%] px-2 xl:py-[10px] md:py-2 py-[7px] border-2 border-amber-700 text-black bg-white font-semibold rounded-xl"
+                                            className="xl:w-44 w-[31%] px-2 xl:py-[10px] md:py-2 py-[6px] border-2 border-amber-700 text-black bg-white font-semibold rounded-xl xl:text-base text-sm"
                                             value={filter}
                                             onChange={(e) => {
                                                 setFilter(e.target.value);
@@ -81,7 +85,7 @@ const AllBooks = () => {
                                         </select>
 
                                         <select
-                                            className="xl:w-44 w-[31%] px-2 xl:py-[10px] md:py-2 py-[7px] border-2 border-amber-700 text-black bg-white font-semibold rounded-xl"
+                                            className="xl:w-44 w-[31%] px-2 xl:py-[10px] md:py-2 py-[6px] border-2 border-amber-700 text-black bg-white font-semibold rounded-xl xl:text-base text-sm"
                                             value={sortBy}
                                             onChange={(e) => {
                                                 setSortBy(e.target.value);
@@ -94,7 +98,7 @@ const AllBooks = () => {
                                         </select>
 
                                         <select
-                                            className="xl:w-44 w-[31%] px-2 xl:py-[10px] md:py-2 py-[7px] border-2 border-amber-700 text-black bg-white font-semibold rounded-xl"
+                                            className="xl:w-44 w-[31%] px-2 xl:py-[10px] md:py-2 py-[6px] border-2 border-amber-700 text-black bg-white font-semibold rounded-xl xl:text-base text-sm"
                                             value={sort}
                                             onChange={(e) => {
                                                 setSort(e.target.value as 'asc' | 'desc');
@@ -105,70 +109,82 @@ const AllBooks = () => {
                                             <option value="asc">Ascending</option>
                                         </select>
                                     </div>
-                                    <Link to="/books" className="flex justify-center">
+                                    <Link to="/create-book" className="flex justify-center">
                                         <button className="xl:px-8 px-6 xl:py-[10px] md:py-2 py-[7px] bg-amber-700 text-white font-semibold rounded-xl hover:bg-amber-600 hover:rounded-4xl transition md:text-base text-sm flex items-center justify-center gap-2">Add Book <FaBook /></button>
                                     </Link>
                                 </div>
-
                                 {/* Book List */}
-                                <div className="">
-                                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4">
-                                        {data?.data?.map((book: IBook) => (
-                                            <div
-                                                key={book?._id}
-                                                className="border-2 border-amber-700 rounded-xl xl:p-4 lg:p-[14px] p-4 shadow-md bg-amber-100 flex flex-col justify-between gap-3"
-                                            >
-                                                <div className="space-y-1">
-                                                    <h3 className="xl:text-xl md:text-lg font-bold text-amber-900">{book?.title}</h3>
-                                                    <p className="text-black font-semibold mt-6">{book?.author}</p>
-                                                    <p className="text-gray-600 text-sm italic font-medium">Genre: <span className="font-bold">{book?.genre}</span></p>
-                                                    <p className="text-sm font-medium">
-                                                        Available:{" "}
-                                                        <span
-                                                            className={`font-bold ${book?.available ? "text-green-600" : "text-yellow-500"
-                                                                }`}
-                                                        >
-                                                            {book?.available ? "Yes" : "No"}
-                                                        </span>
-                                                    </p>
-                                                </div>
+                                <div className="w-full overflow-x-auto">
+                                    <table className="table border-2 border-amber-700 lg:min-w-full md:min-w-[980px] min-w-[890px]">
+                                        <thead className="min-w-full">
+                                            <tr className="xl:text-lg md:text-base text-[15px] py-3 bg-amber-700 text-white flex items-center justify-between min-w-full">
+                                                <th className='pl-2 font-semibold w-[5%] text-left'>ID</th>
+                                                <th className='pl-2 font-semibold w-[20%] text-left'>Title</th>
+                                                <th className='pl-2 font-semibold w-[15%] text-left'>Author</th>
+                                                <th className='pl-2 font-semibold xl:w-[10%] w-[12%] text-left'>Genre</th>
+                                                <th className='pl-2 font-semibold w-[15%] text-left'>ISBN</th>
+                                                <th className='pl-2 font-semibold w-[7%] text-left'>Copies</th>
+                                                <th className='pl-2 font-semibold xl:w-[13%] w-[11%] text-left'>Availability</th>
+                                                <th className='pl-2 font-semibold w-[15%] text-left'>Actions</th>
+                                            </tr>
+                                        </thead >
+                                        {
+                                            data?.data?.map((book: IBook, index: number) =>
+                                                <tbody key={book?._id}>
+                                                    <tr className={`py-2 border-t-2 border-amber-700 flex items-center justify-between min-w-full ${index % 2 === 0 ? 'bg-amber-100' : ''
+                                                        }`}>
+                                                        <th className='pl-2 w-[5%] xl:text-base lg:text-[13px] md:text-[13.5px] text-[13px] font-bold text-left'>{index + 1}</th>
+                                                        <th className='pl-2 w-[20%] xl:text-base lg:text-[13px] md:text-[13.5px] text-[13px] font-medium text-left'>{book?.title}</th>
+                                                        <th className='pl-2 w-[15%] xl:text-base lg:text-[13px] md:text-[13.5px] text-[13px] font-medium text-left'>{book?.author}</th>
+                                                        <th className='pl-2 xl:w-[10%] w-[12%] xl:text-base lg:text-[13px] md:text-[13.5px] text-[13px] font-medium text-left'>{book?.genre}</th>
+                                                        <th className='pl-2 w-[15%] xl:text-base lg:text-[13px] md:text-[13.5px] text-[13px] font-medium text-left'>{book?.isbn}</th>
+                                                        <th className='pl-2 w-[7%] xl:text-base lg:text-[13px] md:text-[13.5px] text-[13px] font-medium text-left'>{book?.copies}</th>
+                                                        <th className='pl-2 xl:w-[13%] w-[11%] xl:text-base lg:text-[13px] md:text-[13.5px] text-[13px] font-medium text-left'>
+                                                            <span
+                                                                className={`font-bold ${book?.available ? "text-green-600" : "text-yellow-500"
+                                                                    }`}
+                                                            >
+                                                                {book?.available ? "Available" : "Not Available"}
+                                                            </span>
+                                                        </th>
+                                                        <th className='px-2 w-[15%] xl:text-base lg:text-[13px] md:text-[13.5px] text-[13px] font-medium grid grid-cols-2 items-center xl:gap-2 gap-1'>
+                                                            <button onClick={() => navigate(`/books/${book?._id}`)} className="transition-transform duration-500 transform hover:scale-105 xl:px-3 px-2 py-1 rounded-lg w-full bg-green-500 xl:text-base lg:text-[13px] md:text-[13.5px] text-[13px] text-white">View</button>
+                                                            <button
+                                                                className={`transition-transform duration-500 transform hover:scale-105 xl:px-3 px-2 py-1 rounded-lg w-full xl:text-base lg:text-[13px] md:text-[13.5px] text-[13px] text-white ${book?.available ? "bg-blue-600 hover:bg-blue-700" : "bg-gray-400 cursor-not-allowed"
+                                                                    }`}
+                                                                disabled={!book?.available}
+                                                                onClick={() => book?.available && setBorrowingModal(true)}
+                                                            >
+                                                                Borrow
+                                                            </button>
+                                                            <button onClick={() => navigate(`/edit-book/${book?._id}`)} className="transition-transform duration-500 transform hover:scale-105 xl:px-3 px-2 py-1 rounded-lg w-full bg-amber-500 xl:text-base lg:text-[13px] md:text-[13.5px] text-[13px] text-white">Edit</button>
+                                                            <button onClick={() => handleDelete(book?._id)} className="transition-transform duration-500 transform hover:scale-105 xl:px-3 px-2 py-1 rounded-lg w-full bg-red-500 xl:text-base lg:text-[13px] md:text-[13.5px] text-[13px] text-white">Delete</button>
+                                                        </th>
+                                                    </tr>
+                                                </tbody>
+                                            )
+                                        }
+                                    </table >
+                                </div >
+                                {/* Pagination */}
+                                <div className="flex justify-center gap-4 xl:mt-10 lg:mt-8 md:mt-7 mt-6 items-center text-sm">
+                                    <button
+                                        onClick={() => setPage((prev) => Math.max(1, prev - 1))}
+                                        disabled={page === 1}
+                                    >
+                                        <FaAngleLeft className="xl:w-10 lg:w-9 w-8 xl:h-10 lg:h-9 h-8 bg-amber-700 text-white p-2 rounded-full" />
+                                    </button>
 
-                                                <div className="grid grid-cols-3 gap-2 font-bold xl:mt-5 mt-3">
-                                                    <button onClick={() => navigate(`/books/${book?._id}`)} className="transition duration-300 py-1 rounded-lg bg-green-600 hover:bg-green-700 text-white text-sm xl:text-base">
-                                                        View
-                                                    </button>
-                                                    <button onClick={() => navigate(`/edit-book/${book?._id}`)} className="transition duration-300 py-1 rounded-lg bg-amber-500 hover:bg-amber-600 text-white text-sm xl:text-base">
-                                                        Edit
-                                                    </button>
-                                                    <button onClick={() => handleDelete(book?._id)} className="transition duration-300 py-1 rounded-lg bg-red-500 hover:bg-red-600 text-white text-sm xl:text-base">
-                                                        Delete
-                                                    </button>
-                                                </div>
-                                            </div>
+                                    <span className="px-3 py-1 font-semibold xl:text-lg text-base">
+                                        Page {page} of {totalPages}
+                                    </span>
 
-                                        ))}
-                                    </div>
-
-                                    {/* Pagination */}
-                                    <div className="flex justify-center gap-4 xl:mt-10 lg:mt-8 md:mt-7 mt-6 items-center text-sm">
-                                        <button
-                                            onClick={() => setPage((prev) => Math.max(1, prev - 1))}
-                                            disabled={page === 1}
-                                        >
-                                            <FaAngleLeft className="xl:w-10 lg:w-9 w-8 xl:h-10 lg:h-9 h-8 bg-amber-700 text-white p-2 rounded-full" />
-                                        </button>
-
-                                        <span className="px-3 py-1 font-semibold xl:text-lg text-base">
-                                            Page {page} of {totalPages}
-                                        </span>
-
-                                        <button
-                                            onClick={() => setPage((prev) => Math.min(totalPages, prev + 1))}
-                                            disabled={page === totalPages}
-                                        >
-                                            <FaAngleRight className="xl:w-10 lg:w-9 w-8 xl:h-10 lg:h-9 h-8 bg-amber-700 text-white p-2 rounded-full" />
-                                        </button>
-                                    </div>
+                                    <button
+                                        onClick={() => setPage((prev) => Math.min(totalPages, prev + 1))}
+                                        disabled={page === totalPages}
+                                    >
+                                        <FaAngleRight className="xl:w-10 lg:w-9 w-8 xl:h-10 lg:h-9 h-8 bg-amber-700 text-white p-2 rounded-full" />
+                                    </button>
                                 </div>
                             </div>
                         )

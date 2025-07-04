@@ -3,6 +3,7 @@ import { createBrowserRouter } from "react-router";
 import App from "../App";
 import LazyLoader from "../components/LazyLoader";
 import BookDetails from "../pages/BookDetails/BookDetails";
+import EditBook from "../pages/EditBook/EditBook";
 
 const LandingPage = React.lazy(() => import("../pages/LandingPage/LandingPage"));
 const AllBooks = React.lazy(() => import("../pages/AllBooks/AllBooks"));
@@ -36,6 +37,12 @@ export const router = createBrowserRouter([
         path: "books/:id",
         element: <Suspense fallback={<LazyLoader />}>
           <BookDetails />
+        </Suspense>
+      },
+      {
+        path: "edit-book/:id",
+        element: <Suspense fallback={<LazyLoader />}>
+          <EditBook />
         </Suspense>
       },
     ]
