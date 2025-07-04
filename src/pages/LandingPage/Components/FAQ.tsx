@@ -29,7 +29,7 @@ const dataOfFAQs = [
     {
         id: 6,
         question: 'Is there a limit to how many copies I can borrow at once?',
-        answer: "Yes—during borrowing, the system enforces that the requested quantity does not exceed the book's current availability. You'll receive a validation error if you attempt to borrow more than what's available.",
+        answer: "Yes. During borrowing, the system enforces that the requested quantity does not exceed the book's current availability. You'll receive a validation error if you attempt to borrow more than what's available.",
     },
     {
         id: 7,
@@ -38,13 +38,42 @@ const dataOfFAQs = [
     },
 ];
 
-
-const FAQs = () => {
+interface IFAQ {
+    id: number,
+    question: string,
+    answer: string
+}
+const FaqItem = (faq: IFAQ) => {
     const [isOpen, setIsOpen] = useState(false);
 
     const toggleAccordion = () => {
         setIsOpen(!isOpen);
     };
+
+    return (
+        <div className="border-2 rounded-xl border-amber-700 shadow-lg">
+            <button
+                className="flex items-center justify-between w-full xl:p-5 lg:p-4 md:p-5 px-3 py-4 text-left focus:outline-none"
+                onClick={toggleAccordion}>
+                <span className="w-[93%] xl:text-xl lg:text-lg md:text-base text-[15px] font-semibold"><span className="font-bold text-black">Question 0{faq?.id}: </span>{faq?.question}</span>
+                <span className='w-[5%] flex justify-end'>
+                    {
+                        isOpen ? <FaAngleUp /> : <FaAngleDown />
+                    }
+                </span>
+            </button>
+            {isOpen && (
+                <div className="xl:p-5 lg:p-4 md:p-5 px-3 py-4 bg-amber-100 rounded-b-xl">
+                    <p className="text-black xl:text-xl lg:text-lg md:text-base text-[15px] font-medium">
+                        <span className="font-bold border-b-2 border-black">Answer:</span> {faq?.answer}</p>
+                </div>
+            )}
+        </div>
+    );
+};
+
+
+const FAQs = () => {
 
     return (
         <div className="xl:px-20 lg:px-16 md:px-12 px-6 xl:mt-20 lg:mt-16 md:mt-14 mt-10 xl:mb-24 lg:mb-20 md:mb-16 mb-14">
@@ -55,24 +84,7 @@ const FAQs = () => {
             <div className="lg:mt-12 md:mt-10 mt-8 flex flex-col gap-3 ">
                 {
                     dataOfFAQs?.map((faq) => (
-                        <div key={faq?.id} className="border-2 rounded-xl border-amber-700 shadow-lg">
-                            <button
-                                className="flex items-center justify-between w-full xl:p-5 lg:p-4 md:p-5 px-3 py-4 text-left focus:outline-none"
-                                onClick={toggleAccordion}>
-                                <span className="w-[93%] xl:text-xl lg:text-lg md:text-base text-[15px]   font-semibold"><span className="font-bold text-black">Question 0{faq?.id}: </span>{faq?.question}</span>
-                                <span className='w-[5%] flex justify-end'>
-                                    {
-                                        isOpen ? <FaAngleUp /> : <FaAngleDown />
-                                    }
-                                </span>
-                            </button>
-                            {isOpen && (
-                                <div className="xl:p-5 lg:p-4 md:p-5 px-3 py-4 bg-amber-100 rounded-b-xl">
-                                    <p className="text-black xl:text-xl lg:text-lg md:text-base text-[15px] font-medium">
-                                        <span className="font-bold border-b-2 border-black">Answer:</span> {faq?.answer}</p>
-                                </div>
-                            )}
-                        </div>
+                        <FaqItem key={faq?.id} question={faq?.question} answer={faq?.answer} id={faq?.id} />
                     ))}
             </div>
         </div>
