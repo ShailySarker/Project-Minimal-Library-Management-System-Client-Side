@@ -3,12 +3,9 @@ import { useCreateBookMutation } from "../../redux/api/baseApi";
 import Swal from "sweetalert2";
 
 const AddBook = () => {
-    // const [createBook, { data, isLoading, isError }] = useCreateBookMutation();
-    // const navigate = useNavigate();
-
     const genres = ["FICTION", "NON_FICTION", "SCIENCE", "HISTORY", "BIOGRAPHY", "FANTASY"];
 
-    const [createBook, { data, isLoading, isError }] = useCreateBookMutation();
+    const [createBook, { isLoading }] = useCreateBookMutation();
     const navigate = useNavigate();
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -60,7 +57,6 @@ const AddBook = () => {
                 icon: "error",
                 title: "Oops...",
                 text: `Error found: ${error?.data?.message}`,
-                // text: "Something went wrong!",
             });
             console.error("Failed to add book", error?.data?.message);
         }
@@ -72,7 +68,7 @@ const AddBook = () => {
                 <h1 className="xl:text-4xl/normal md:text-3xl/normal text-2xl/normal font-bold text-center text-black">Add New Book</h1>
             </div>
 
-            <div className="xl:mt-14 lg:mt-12 md:mt-10 mt-8">
+            <div className="xl:mt-10 lg:mt-8 md:mt-7 mt-5">
                 <form
                     onSubmit={handleSubmit}
                     className="lg:w-[60%] md:w-[70%] w-full flex flex-col justify-center mx-auto gap-3 border-2 border-amber-700 rounded-2xl xl:p-14 lg:p-9 md:p-8 p-4 shadow-md bg-amber-100"

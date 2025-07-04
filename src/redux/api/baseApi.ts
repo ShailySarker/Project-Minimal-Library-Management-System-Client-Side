@@ -54,6 +54,17 @@ export const baseApi = createApi({
             }),
             invalidatesTags: ['book'],
         }),
+
+        // borrow book
+        borrowBook: builder.mutation({
+            query: (payload) => ({
+                url: `/borrow`,
+                method: 'POST',
+                body: payload,
+            }),
+            invalidatesTags: ['book'],
+        }),
+
     })
 })
 

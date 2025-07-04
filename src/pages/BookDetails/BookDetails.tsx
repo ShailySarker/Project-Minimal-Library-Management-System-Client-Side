@@ -54,7 +54,7 @@ const BookDetails = () => {
                             <p className="xl:text-lg md:text-base text-sm font-medium"><strong>Copies:</strong> {book?.data?.copies}</p>
                             <p className="xl:text-lg md:text-base text-sm font-medium"><strong>Available:</strong> {book?.data?.available ? 'Yes' : 'No'}</p>
                             <div className="flex lg:gap-3 gap-2 justify-center xl:mt-14 lg:mt-10 md:mt-8 mt-7 font-semibold">
-                                <button onClick={() => navigate(`/books/${book?.data?._id}`)} className={`transition duration-300 xl:px-8 px-6 xl:py-[10px] md:py-2 py-[7px] rounded-xl hover:rounded-4x text-white text-sm xl:text-base ${book?.available ? "bg-blue-600 hover:bg-blue-700" : "bg-gray-400 cursor-not-allowed"}`}>
+                                <button onClick={() => navigate(`/books/${book?.data?._id}`)} className={`transition duration-300 xl:px-8 px-6 xl:py-[10px] md:py-2 py-[7px] rounded-xl hover:rounded-4x text-white text-sm xl:text-base ${book?.data?.available ? "bg-blue-600 hover:bg-blue-700" : "bg-gray-400 cursor-not-allowed"}`}>
                                     Borrow
                                 </button>
                                 <button onClick={() => navigate(`/edit-book/${book?.data?._id}`)} className="transition duration-300 xl:px-8 px-6 xl:py-[10px] md:py-2 py-[7px] rounded-xl hover:rounded-4xl bg-amber-500 hover:bg-amber-600 text-white text-sm xl:text-base ">
